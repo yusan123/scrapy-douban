@@ -6,21 +6,25 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import os
 import requests
+import pymysql
+from jiandan.settings import *
+
 
 class JiandanPipeline(object):
+    def __init__(self):
+        self.client = pymysql.connect(
+            host=MYSQL_HOST,
+            port=MYSQL_PORT,
+            db=MYSQL_DBNAME,
+            user=MYSQL_USER,
+            passwd=MYSQL_PASSWD,
+            charset=MYSQL_CHARSET
+        )
+        self.cur = self.client.cursor()
+
     def process_item(self, item, spider):
-        dir_path ='E:/%s'%spider.name
-        print(dir_path)
-        if not os.path.exists(dir_path):
-            os.mkdir(dir_path)
-        for img_url in item['image_urls']:
-            list_name = img_url.split("/")
-            file_name = list_name[-1]
-            file_path="%s/%s"%(dir_path,file_name)
-            if os.path.exists(file_name):
-                continue
-            with open(file_path,'wb') as file_writer:
-                # conn = (img_url)#下载图片
-                file_writer.write(requests.get(img_url).content)
-            file_writer.close()
+        sql = "insert into meituri_zhongguo values(%s,%s,%s,%s,%s,%s)"
+        data =(item["organization"],item["modelName"],item["picNum"],item["tags"],item["title"],item["pic0urls"])
+        self.cur.execute(sql,data)
+        self.client.commit()
         return item

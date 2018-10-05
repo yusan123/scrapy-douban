@@ -13,4 +13,10 @@ class JiandanItem(scrapy.Item):
     # name = scrapy.Field()
 
     #图片的链接
-    image_urls = scrapy.Field();
+    pic0urls = scrapy.Field()
+    title=scrapy.Field()
+    picNum=scrapy.Field()
+    modelName=scrapy.Field()
+    tags=scrapy.Field()
+    organization=scrapy.Field()
+

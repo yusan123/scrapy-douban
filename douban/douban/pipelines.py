@@ -21,8 +21,8 @@ class DoubanPipeline(object):
     #     self.cur = self.client.cursor()
 
     def process_item(self, item, spider):
-        # sql = "insert into douban250 values(%s,%s,%s,%s,%s,%s)"
-        # data = (item["number"], item["name"], item["introduce"], item["star"], item["evaluate"], item["describe"]);
-        # self.cur.execute(sql, data)
-        # self.client.commit()
+        sql = "insert into douban250 values(%s,%s,%s,%s,%s,%s)"
+        data = (item["number"], item["name"], item["introduce"], item["star"], item["evaluate"], item["describe"])
+        self.cur.execute(sql, data)
+        self.client.commit()
         return item
