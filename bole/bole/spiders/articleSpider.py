@@ -2,7 +2,7 @@
 import scrapy
 from bole.items import BoleItem
 from scrapy.http import Request
-
+from urllib import parse
 #//div[@class='post floated-thumb']//div[1]/a/@href  可以拿到所有文章的每个文章的连接
 class ArticlespiderSpider(scrapy.Spider):
     name = 'articleSpider'
@@ -12,7 +12,7 @@ class ArticlespiderSpider(scrapy.Spider):
     def parse(self, response):
         urlList = response.xpath("//div[@class='post floated-thumb']//div[1]/a/@href").extract()
         for url in urlList:
-            yield Request(url,callback=self.parse_detail)
+            yield Request(parse.urljoin(response.url,url),callback=self.parse_detail)
         nexturl = response.xpath("//a[@class='next page-numbers']/@href").extract_first()
         if nexturl:
             yield Request(nexturl,callback=self.parse)

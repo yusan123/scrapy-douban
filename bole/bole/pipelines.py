@@ -23,6 +23,7 @@ class BolePipeline(object):
     def process_item(self, item, spider):
         sql = "insert into jobbole values(%s,%s,%s,%s,%s)"
         data = (item['title'], item['time'], item['tag'], item['source'], item['content'])
+        self.client.ping()
         self.cur.execute(sql, data)
         self.client.commit()
         return item
