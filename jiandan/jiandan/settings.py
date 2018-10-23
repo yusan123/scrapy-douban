@@ -46,9 +46,10 @@ DOWNLOAD_DELAY = 1
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'jiandan.middlewares.JiandanSpiderMiddleware': 543,
-#}
+SPIDER_MIDDLEWARES = {
+   'jiandan.middlewares.JiandanSpiderMiddleware': 543,
+   'jiandan.middlewares.my_useragent': 5,
+}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
@@ -65,9 +66,12 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'jiandan.pipelines.JiandanPipeline': 300,
+#   'jiandan.pipelines.JiandanPipeline': 300,
+   #'scrapy.pipelines.images.ImagesPipeline': 300,
+   'jiandan.pipelines.MyImagePipeline': 300,
 }
-
+IMAGES_URLS_FIELD = 'pics'
+IMAGES_STORE = '../img'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True

@@ -8,7 +8,7 @@ import os
 import requests
 import pymysql
 from jiandan.settings import *
-
+from scrapy.pipelines.images import ImagesPipeline
 
 class JiandanPipeline(object):
     def __init__(self):
@@ -28,3 +28,5 @@ class JiandanPipeline(object):
         self.cur.execute(sql,data)
         self.client.commit()
         return item
+class MyImagePipeline(ImagesPipeline):
+    pass

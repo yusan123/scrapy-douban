@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from jiandan.items import JiandanItem
-
+from urllib import parse
 
 class JiandanspiderSpider(scrapy.Spider):
     name = 'jiandanspider'
-    allowed_domains = ['www.meituri.com']
-    start_urls = ['https://www.meituri.com/zhongguo/']
+    allowed_domains = ['www.27270.com']
+    start_urls = ['http://www.27270.com/ent/rentiyishu/2017/172906.html']
 
+    # def start_requests(self):
+    #     reqs = []
+    #     url = 'http://www.mmjpg.com/mm/1499'
+    #     req = scrapy.Request(url,callback=self.parse,dont_filter=True)
+    #     reqs.append(req)
+    #     return reqs
     def parse(self, response):
-
-        itemList = response.xpath("//div[@class='hezi']//li")
-        # print(item["image_urls"])
-
-        for i in itemList:
-            item = JiandanItem()
-            item["pic0urls"] = i.xpath("./a/img/@src").extract_first()
-            item["title"] = i.xpath(".//p[@class='biaoti']//text()").extract_first()
-            item["picNum"] = i.xpath(".//span[@class='shuliang']//text()").extract_first()
-            item["modelName"] = i.xpath(".//p[2]/a//text()").extract_first()
-            item["organization"] = i.xpath(".//p[1]/a//text()").extract_first()
-            tagList = i.xpath(".//p[3]//a//text()").extract()
-            item["tags"] = "-".join(tagList)
-            print(item)
-            yield item
-        next_url = response.xpath("//div[@id='pages']//a[last()]/@href").extract()
+        pic_urls = response.xpath("//div[@class='articleV4Body']/p/a[1]/img/@src").extract()
+        item = JiandanItem()
+        item['pics'] = pic_urls
+        yield item
+        next_url = response.xpath("//div[@class='page-tag oh']//li[@id='nl']/a/@href").extract_first()
         if next_url:
-            next_url = next_url[0]
-            yield scrapy.Request("https://www.meituri.com" + next_url, callback=self.parse)
+            yield scrapy.Request(parse.urljoin(response.url,next_url), callback=self.parse)
