@@ -6,7 +6,7 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from bole.settings import *
 import pymysql
-
+from scrapy.pipelines.images import ImagesPipeline
 
 class BolePipeline(object):
     def __init__(self):
@@ -23,7 +23,12 @@ class BolePipeline(object):
     def process_item(self, item, spider):
         sql = "insert into jobbole values(%s,%s,%s,%s,%s)"
         data = (item['title'], item['time'], item['tag'], item['source'], item['content'])
-        self.client.ping()
+        self.client.ping()  #加上这个语句，可以防止mysql 自动断开
         self.cur.execute(sql, data)
         self.client.commit()
+        return item
+class BoleImagePipeline(ImagesPipeline):
+    def item_completed(self, results, item, info):
+        for ok,value in results:
+             item['pic_path'] = value['path']
         return item

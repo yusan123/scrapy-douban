@@ -66,9 +66,13 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'bole.pipelines.BolePipeline': 300,
+#   'bole.pipelines.BolePipeline': 300,
+#  'scrapy.pipelines.images.ImagesPipeline':200  #这个scrapy自带的图片处理管道
+   'bole.pipelines.BoleImagePipeline': 300,
 }
 
+IMAGES_URLS_FIELD='pic_url'
+IMAGES_STORE = '../img'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 # AUTOTHROTTLE_ENABLED = True
@@ -94,5 +98,5 @@ MYSQL_HOST = 'localhost'
 MYSQL_PORT = 3306
 MYSQL_USER = 'root'
 MYSQL_PASSWD = '123'
-MYSQL_DB = 'scrapy'
+MYSQL_DB = 'scrapy2'
 MYSQL_CHARSET = 'utf8'  #这里不能写utf-8

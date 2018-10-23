@@ -21,5 +21,9 @@ class BoleItem(scrapy.Item):
     content = scrapy.Field()
     #原文链接
     source = scrapy.Field()
+    #文章的第一个张图片
+    pic_url = scrapy.Field()
+    #下载图片本地存储的路径
+    pic_path = scrapy.Field()
 
     pass
