@@ -8,7 +8,7 @@
 #     http://doc.scrapy.org/en/latest/topics/settings.html
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-
+import os
 BOT_NAME = 'jiandan'
 
 SPIDER_MODULES = ['jiandan.spiders']
@@ -70,8 +70,9 @@ ITEM_PIPELINES = {
    #'scrapy.pipelines.images.ImagesPipeline': 300,
    'jiandan.pipelines.MyImagePipeline': 300,
 }
-IMAGES_URLS_FIELD = 'pics'
-IMAGES_STORE = '../img'
+IMAGES_URLS_FIELD = 'pic'
+IMAGES_STORE = r'D:\pic2'
+#IMAGES_STORE=os.path.join(os.path.dirname(os.path.dirname(__file__)),'images')
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
