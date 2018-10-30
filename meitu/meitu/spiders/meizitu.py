@@ -6,7 +6,7 @@ from scrapy.http import Request
 class MeizituSpider(scrapy.Spider):
     name = 'meizitu'
     allowed_domains = ['www.rtz.cc']
-    start_urls = ['https://www.rtz.cc/html/xinggan/']
+    start_urls = ['https://www.rtz.cc/html/xiee/']
 
     def parse(self,response):
         url_list = response.xpath("//ul[@class='detail-list']//li/a/@href").extract()
